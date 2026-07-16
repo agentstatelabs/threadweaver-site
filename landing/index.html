@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThreadWeaver — AI Chat with Branchable Conversations</title>
+  <meta name="description" content="AI chat with branchable conversations. Fork from any message, compare branches side-by-side, cherry-pick into a merged branch. Voice, sharing, MCP tools, hooks. Self-hosted, multi-LLM, powered by AgentStateGraph." />
+  <meta property="og:title" content="ThreadWeaver" />
+  <meta property="og:description" content="AI chat with branchable conversations. Fork, compare, merge, share. Self-hosted, multi-LLM, MCP tools, native hooks." />
+  <meta property="og:url" content="https://threadweaver.org" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ─── Sticky Nav ──────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-logo">ThreadWeaver</span>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#selfhost">Self-Host</a>
+      <a href="https://github.com/agentstatelabs/ThreadWeaver" target="_blank">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Hero ────────────────────────────────────────────── -->
+<section class="hero" id="top">
+  <span class="badge">v0.3.5-beta.2 &middot; BSL 1.1</span>
+  <h1>ThreadWeaver</h1>
+  <p class="tagline">AI chat where every conversation is versioned, branchable, and searchable &mdash; powered by <a href="https://agentstategraph.dev">AgentStateGraph</a>.</p>
+  <p class="subtitle">SvelteKit + FastAPI + Rust &middot; Self-host in 60 seconds</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://github.com/agentstatelabs/ThreadWeaver" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      View on GitHub
+    </a>
+    <a class="btn btn-secondary" href="https://agentstategraph.dev" target="_blank">Read the Docs</a>
+    <a class="btn btn-secondary" href="#selfhost">Self-Host Now</a>
+  </div>
+</section>
+
+<!-- ─── Features ────────────────────────────────────────── -->
+<section class="section" id="features">
+  <div class="container">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Not another chat wrapper</h2>
+
+    <!-- Feature 1: Branching -->
+    <div class="feature-block" data-reveal>
+      <div class="feature-text">
+        <h3>Branch any conversation</h3>
+        <p>Every message is a branch point. Click to fork and explore "what if I'd asked differently?" without losing the original thread. Branches are O(1) &mdash; instant creation, instant discard. Compare approaches side by side, then commit the winner.</p>
+      </div>
+      <div class="mockup">
+        <div class="mock-msg user">
+          <div class="mock-avatar"></div>
+          <div style="flex:1"><div class="mock-role">You</div><div class="mock-line w80"></div><div class="mock-line w60"></div></div>
+        </div>
+        <div class="mock-msg assistant">
+          <div class="mock-avatar"></div>
+          <div style="flex:1"><div class="mock-role">Assistant</div><div class="mock-line w90"></div><div class="mock-line w70"></div><div class="mock-line w50"></div></div>
+        </div>
+        <div class="mock-branch-point"><span class="dot"></span> Branch point</div>
+        <div class="mock-branches">
+          <div class="mock-branch-stub">Original thread<br/><span style="color:var(--accent)">3 messages</span></div>
+          <div class="mock-branch-stub">What if I asked differently?<br/><span style="color:var(--accent)">2 messages</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Provenance -->
+    <div class="feature-block reverse" data-reveal>
+      <div class="feature-text">
+        <h3>Full provenance on every message</h3>
+        <p>Every message exchange is a versioned commit with intent, reasoning, and confidence metadata. Query by "why," not just "what." Blame any value to see who changed it, when, and with what reasoning. Powered by <a href="https://agentstategraph.dev">AgentStateGraph</a>.</p>
+      </div>
+      <div class="mockup">
+        <div class="mock-timeline">
+          <div class="mock-prov-entry">
+            <div class="mock-prov-dot"></div>
+            <div class="mock-prov-card">
+              <div class="mock-prov-header"><span class="mock-prov-cat">Checkpoint</span><span class="mock-prov-time">2:31 PM</span></div>
+              <div class="mock-prov-desc">Initialize cluster configuration</div>
+              <div class="mock-prov-meta"><span>agent/setup</span><span class="mock-prov-conf">95%</span></div>
+            </div>
+          </div>
+          <div class="mock-prov-entry">
+            <div class="mock-prov-dot"></div>
+            <div class="mock-prov-card">
+              <div class="mock-prov-header"><span class="mock-prov-cat">Explore</span><span class="mock-prov-time">2:32 PM</span></div>
+              <div class="mock-prov-desc">Evaluate network topology options</div>
+              <div class="mock-prov-meta"><span>agent/planner</span><span class="mock-prov-conf">72%</span></div>
+            </div>
+          </div>
+          <div class="mock-prov-entry">
+            <div class="mock-prov-dot"></div>
+            <div class="mock-prov-card">
+              <div class="mock-prov-header"><span class="mock-prov-cat">Refine</span><span class="mock-prov-time">2:33 PM</span></div>
+              <div class="mock-prov-desc">Apply mesh topology with failover</div>
+              <div class="mock-prov-meta"><span>agent/planner</span><span class="mock-prov-conf">89%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3: Markdown + Code -->
+    <div class="feature-block" data-reveal>
+      <div class="feature-text">
+        <h3>Rich markdown rendering</h3>
+        <p>Code blocks with syntax highlighting, tables, headings, lists, links, blockquotes &mdash; all rendered inline. Paste images, drop files. Works with Claude, GPT, Gemini, Grok, and local models via Ollama.</p>
+      </div>
+      <div class="mockup">
+        <div class="mock-msg assistant">
+          <div class="mock-avatar"></div>
+          <div style="flex:1">
+            <div class="mock-role">Assistant</div>
+            <div style="font-size:14px;font-weight:700;margin:4px 0 6px;color:var(--text-primary)">Setting up the pipeline</div>
+            <div class="mock-line w90"></div>
+            <div class="mock-line w70"></div>
+            <div class="mock-code">
+              <div class="line"><span class="kw">async</span> <span class="kw">def</span> <span class="fn">deploy</span>(config):</div>
+              <div class="line">&nbsp;&nbsp;<span class="cm"># Validate and push</span></div>
+              <div class="line">&nbsp;&nbsp;<span class="kw">await</span> <span class="fn">validate</span>(config)</div>
+              <div class="line">&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">push</span>(<span class="str">"prod"</span>)</div>
+            </div>
+            <div style="margin-top:6px">
+              <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px"><span style="color:var(--accent)">&#8226;</span><div class="mock-line w60" style="margin:0"></div></div>
+              <div style="display:flex;gap:6px;align-items:center"><span style="color:var(--accent)">&#8226;</span><div class="mock-line w50" style="margin:0"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 4: Tool Calling + MCP -->
+    <div class="feature-block reverse" data-reveal>
+      <div class="feature-text">
+        <h3>Tool calling + MCP servers</h3>
+        <p>Connect MCP servers with one click &mdash; filesystem, GitHub, SQLite, web search, and 100+ more. The AI reads files, runs commands, and queries databases. Full agentic loop with automatic tool dispatch and result integration. Opt-in human-in-the-loop approval gates any tool that could have side effects.</p>
+      </div>
+      <div class="mockup">
+        <div class="mock-msg user">
+          <div class="mock-avatar"></div>
+          <div style="flex:1"><div class="mock-role">You</div><div style="font-size:12px;color:var(--text-secondary)">List the files in src/</div></div>
+        </div>
+        <div class="mock-msg assistant">
+          <div class="mock-avatar"></div>
+          <div style="flex:1">
+            <div class="mock-role">Assistant</div>
+            <div class="mock-tool-badge">list_directory</div>
+            <div class="mock-tool-result">src/lib/<br/>src/routes/<br/>src/app.html<br/>src/app.css</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:6px">Found 4 entries in <code style="color:var(--cyan);background:var(--bg-primary);padding:1px 4px;border-radius:3px;font-size:11px">src/</code>. The project has a standard SvelteKit structure.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 5: Compare + Merge -->
+    <div class="feature-block" data-reveal>
+      <div class="feature-text">
+        <h3>Compare branches, cherry-pick the best</h3>
+        <p>Branching is only half the story. Open <code>/compare</code> to see any two branches side-by-side with word-level inline diff — every added, removed, and unchanged word lit up. Turn on merge mode, tick the messages you want from either side, and commit them to a new branch with both parents recorded. Nothing destructive happens to the originals.</p>
+      </div>
+      <div class="mockup">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px">
+          <div style="padding:8px 10px;background:var(--bg-tertiary);border-radius:6px;border-left:3px solid #3b82f6">
+            <div style="color:var(--text-muted);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;display:flex;justify-content:space-between"><span>Branch A</span><span>1.2k · $0.008</span></div>
+            <div style="line-height:1.5">Approach with <span style="background:rgba(239,68,68,0.22);color:#fecaca;text-decoration:line-through;padding:0 2px;border-radius:2px">eager</span> loading</div>
+          </div>
+          <div style="padding:8px 10px;background:var(--bg-tertiary);border-radius:6px;border-left:3px solid #a855f7">
+            <div style="color:var(--text-muted);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;display:flex;justify-content:space-between"><span>Branch B</span><span>980 · $0.006</span></div>
+            <div style="line-height:1.5">Approach with <span style="background:rgba(16,185,129,0.22);color:#a7f3d0;padding:0 2px;border-radius:2px">lazy</span> loading</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;margin-top:10px;background:var(--bg-secondary);border:1px solid var(--accent);border-radius:6px;font-size:11px;color:var(--text-secondary)">
+          <span style="font-weight:600;color:var(--text-primary)">2 messages selected</span>
+          <span style="margin-left:auto;background:var(--accent);color:#fff;padding:5px 12px;border-radius:4px;font-weight:600">Merge into new branch</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Platform features ────────────────────────────────── -->
+<section class="section" style="padding-top:0" data-reveal>
+  <div class="container">
+    <p class="section-label">Platform</p>
+    <h2 class="section-title">The rest of the feature set</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128266; Voice input &amp; output</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Record via the mic, Whisper transcribes into the textarea. Speaker button on every assistant message uses the browser's TTS — zero deps, offline.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128279; Share as a link</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Public read-only URL per conversation. Recipient doesn't need an account. Rotatable, revocable token.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128202; Cost &amp; token stats</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Per-message, per-conversation, and windowed stats (Today / 7d / 30d). Pricing overrides for any model you add.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#129513; Native hooks</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Drop a Python file in <code style="font-size:11px;color:var(--accent)">backend/hooks/</code> or ship a pip package. Four kinds: inlet, outlet, stream, tool.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128220; Exports</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Markdown, JSON, and PDF for every conversation and for the notebook. PDF is lazy-loaded so the bundle stays lean.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#127776; Templates</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Reusable (system prompt, provider, model) presets. New chat from a template seeds the conversation instantly.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#9000; Keyboard shortcuts</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">&#8984;K search, &#8984;N new chat, &#8984;B sidebar, &#8984;&#8679;C compare, &#8984;/ for help.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128737; BYOK demo mode</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Flip one env var and every visitor pastes their own key. Keys live in their browser; conversations are per-session with a TTL sweep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Hardening ────────────────────────────────────────── -->
+<section class="section" style="padding-top:0" data-reveal>
+  <div class="container">
+    <p class="section-label">Hardening</p>
+    <h2 class="section-title">Built to run in production</h2>
+    <p style="max-width:680px;color:var(--text-secondary);font-size:15px;line-height:1.65;margin-bottom:24px">Three passes of threat modeling and remediation &mdash; envelope integrity on every tool call, secrets encrypted at rest, session isolation for multi-tenant demos, and a reproducible dep graph.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128272; Encrypted-at-rest BYOK config</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Provider keys and secrets in <code style="font-size:11px;color:var(--accent)">threadweaver_config.json</code> wrapped with Fernet + PBKDF2-HMAC-SHA256 (600k iterations). Master key via env var or OS keychain &mdash; never on disk in plaintext.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128202; Per-session isolation</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Every demo-mode visitor gets their own conversation space, pinned by an <code style="font-size:11px;color:var(--accent)">X-Demo-Session</code> header. Idle sessions expire on a background TTL sweep so state cardinality stays bounded.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128737; Envelope integrity on tool calls</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)">Every tool invocation carries a signed envelope with a trust-taxonomy tag. Replayed envelopes and oversized content payloads are rejected at the boundary before the agentic loop sees them.</p>
+      </div>
+      <div style="padding:18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px">
+        <h4 style="margin:0 0 6px 0;font-size:14px;color:var(--text-primary)">&#128230; Pinned dep graph</h4>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:var(--text-secondary)"><code style="font-size:11px;color:var(--accent)">backend/requirements.txt</code> uses exact-version pins on every top-level dep; bumps are intentional and reviewed. Capture a full lockfile with <code style="font-size:11px;color:var(--accent)">pip freeze</code> when determinism matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Providers ────────────────────────────────────────── -->
+<section class="section" style="padding-top:0" data-reveal>
+  <div class="container" style="text-align:center">
+    <p class="section-label">Bring Your Own Key</p>
+    <h2 class="section-title">Works with your models</h2>
+    <div class="providers">
+      <span class="provider-pill" style="color:#d97706;border-color:#d9770640">Claude</span>
+      <span class="provider-pill" style="color:#10a37f;border-color:#10a37f40">GPT</span>
+      <span class="provider-pill" style="color:#4285f4;border-color:#4285f440">Gemini</span>
+      <span class="provider-pill" style="color:#fff;border-color:#ffffff30">Grok</span>
+      <span class="provider-pill" style="color:#e0e0e0;border-color:#ffffff20">Ollama</span>
+      <span class="provider-pill" style="color:var(--text-muted);border-color:var(--border)">OpenAI-compatible</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Architecture ─────────────────────────────────────── -->
+<section class="section" id="architecture" data-reveal>
+  <div class="container">
+    <p class="section-label">Architecture</p>
+    <h2 class="section-title">Three layers, one primitive</h2>
+    <div class="arch">
+      <div class="arch-box">SvelteKit Frontend</div>
+      <div class="arch-connector"></div>
+      <div class="arch-box">FastAPI Backend</div>
+      <div class="arch-connector"></div>
+      <div class="arch-box accent">AgentStateGraph (Rust)</div>
+      <div class="arch-connector"></div>
+      <div class="arch-split">
+        <div class="arch-branch">
+          <div class="arch-branch-label">LLM Providers</div>
+          <div class="arch-pills">
+            <span class="arch-pill">Claude</span>
+            <span class="arch-pill">GPT</span>
+            <span class="arch-pill">Gemini</span>
+            <span class="arch-pill">Grok</span>
+            <span class="arch-pill">Ollama</span>
+            <span class="arch-pill">Custom</span>
+          </div>
+        </div>
+        <div class="arch-branch">
+          <div class="arch-branch-label">MCP Servers</div>
+          <div class="arch-pills">
+            <span class="arch-pill">Filesystem</span>
+            <span class="arch-pill">GitHub</span>
+            <span class="arch-pill">SQLite</span>
+            <span class="arch-pill">Memory</span>
+            <span class="arch-pill">Search</span>
+            <span class="arch-pill">100+ more</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Comparison ───────────────────────────────────────── -->
+<section class="section" data-reveal>
+  <div class="container">
+    <p class="section-label">Comparison</p>
+    <h2 class="section-title">What makes ThreadWeaver different</h2>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Feature</th><th>Typical AI Chat</th><th>ThreadWeaver</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="feat-icon">&#9922;</span>Branching</td><td class="cross">&#10007; Linear scroll only</td><td class="check">&#10003; Fork from any message</td></tr>
+          <tr><td><span class="feat-icon">&#8644;</span>Compare branches</td><td class="cross">&#10007; Copy/paste into a doc</td><td class="check">&#10003; Side-by-side view with word-level diff</td></tr>
+          <tr><td><span class="feat-icon">&#10754;</span>Merge branches</td><td class="cross">&#10007; Manual only</td><td class="check">&#10003; Cherry-pick messages into a new branch</td></tr>
+          <tr><td><span class="feat-icon">&#128202;</span>Provenance</td><td class="cross">&#10007; No history metadata</td><td class="check">&#10003; Intent, reasoning, confidence per commit</td></tr>
+          <tr><td><span class="feat-icon">&#128270;</span>Search</td><td class="cross">&#10007; Ctrl+F at best</td><td class="check">&#10003; Full-text across all conversations</td></tr>
+          <tr><td><span class="feat-icon">&#128211;</span>Notebook</td><td class="cross">&#10007; Copy-paste</td><td class="check">&#10003; Tag, comment, branch, export md/JSON/PDF</td></tr>
+          <tr><td><span class="feat-icon">&#128736;</span>Tool calling</td><td class="cross">&#10007; Chat only</td><td class="check">&#10003; MCP servers + agentic loop + HITL approval</td></tr>
+          <tr><td><span class="feat-icon">&#128266;</span>Voice</td><td class="cross">&#10007; Rarely</td><td class="check">&#10003; Whisper dictation + TTS on every reply</td></tr>
+          <tr><td><span class="feat-icon">&#128279;</span>Sharing</td><td class="cross">&#10007; Screenshot</td><td class="check">&#10003; Public read-only link, revocable</td></tr>
+          <tr><td><span class="feat-icon">&#128181;</span>Cost visibility</td><td class="cross">&#10007; Guess</td><td class="check">&#10003; Per-message + time-windowed stats</td></tr>
+          <tr><td><span class="feat-icon">&#128193;</span>Projects</td><td class="cross">&#10007; Flat list</td><td class="check">&#10003; Group related chats with shared context</td></tr>
+          <tr><td><span class="feat-icon">&#127912;</span>Multimodal</td><td>&#10003; Some providers</td><td class="check">&#10003; All providers + paste / drop / file picker</td></tr>
+          <tr><td><span class="feat-icon">&#129513;</span>Extensibility</td><td class="cross">&#10007; Fork the app</td><td class="check">&#10003; Native Python hooks: inlet / outlet / stream / tool</td></tr>
+          <tr><td><span class="feat-icon">&#127760;</span>Self-hosted</td><td class="cross">&#10007; Cloud only</td><td class="check">&#10003; Docker + auto-HTTPS overlay, ARM64</td></tr>
+          <tr><td><span class="feat-icon">&#128241;</span>BYOK</td><td class="cross">&#10007; Subscription required</td><td class="check">&#10003; Bring your own API keys (demo mode: per-visitor)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Self-Host ────────────────────────────────────────── -->
+<section class="section" id="selfhost">
+  <div class="container">
+    <p class="section-label">Get Started</p>
+    <h2 class="section-title" data-reveal>Self-host in 60 seconds</h2>
+
+    <div data-reveal>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div>
+          <div class="terminal-dot yellow"></div>
+          <div class="terminal-dot green"></div>
+          <span class="terminal-title">terminal</span>
+        </div>
+        <pre class="terminal-body" id="terminal-body"></pre>
+      </div>
+    </div>
+
+    <div class="install-cards" data-reveal>
+      <div class="install-card">
+        <h4>Docker</h4>
+        <code>docker compose up -d</code>
+        <p>Backend + frontend, one command</p>
+      </div>
+      <div class="install-card">
+        <h4>+ Ollama</h4>
+        <code>docker compose -f ... up -d</code>
+        <p>Add local models (Llama, Mistral, Qwen)</p>
+      </div>
+      <div class="install-card">
+        <h4>Native</h4>
+        <code>pip install &amp;&amp; npm run dev</code>
+        <p>ARM64 / Jetson / PicoClaw ready</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Enterprise / AgentStateGraph ─────────────────────── -->
+<section class="section" data-reveal>
+  <div class="container">
+    <p class="section-label">Powered By</p>
+    <h2 class="section-title">Built on AgentStateGraph</h2>
+    <div class="enterprise-grid">
+      <div>
+        <ul class="enterprise-bullets">
+          <li>Every message exchange is a <strong>versioned commit</strong> with intent, reasoning, and confidence metadata</li>
+          <li><strong>Sealed epochs</strong> provide tamper-evident audit trails &mdash; prove what happened, when, and why</li>
+          <li><strong>Branch a conversation</strong> and the entire state graph forks &mdash; O(1) creation, instant discard</li>
+          <li><strong>Authority chains</strong> track who authorized what, with full delegation history</li>
+        </ul>
+        <div class="enterprise-links">
+          <a class="btn btn-secondary" href="https://agentstategraph.dev" target="_blank">Learn more</a>
+          <a class="btn btn-secondary" href="https://agentstategraph.dev/compare/" target="_blank">Compare approaches</a>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="mock-epoch">
+          <div class="mock-epoch-block">
+            <div class="mock-epoch-hash">a7f3...c2</div>
+            <div class="mock-epoch-label">commit</div>
+          </div>
+          <div class="mock-epoch-link"></div>
+          <div class="mock-epoch-block">
+            <div class="mock-epoch-hash">d1e8...9a</div>
+            <div class="mock-epoch-label">commit</div>
+          </div>
+          <div class="mock-epoch-link"></div>
+          <div class="mock-epoch-block">
+            <div class="mock-epoch-hash">f5b2...17</div>
+            <div class="mock-epoch-label">commit</div>
+          </div>
+          <div class="mock-epoch-seal">SEALED</div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:16px">Tamper-evident epoch &mdash; every commit hashed, the chain verifiable offline</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ──────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="https://github.com/agentstatelabs/ThreadWeaver" target="_blank">GitHub</a>
+      <a href="#selfhost">Self-Host Guide</a>
+      <a href="https://github.com/agentstatelabs/ThreadWeaver/blob/main/CHANGELOG.md" target="_blank">Changelog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="https://agentstategraph.dev" target="_blank">AgentStateGraph</a>
+      <a href="https://agentstategraph.dev/guides/quickstart/" target="_blank">Documentation</a>
+      <a href="https://agentstategraph.dev/compare/" target="_blank">Compare</a>
+    </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <a href="https://github.com/agentstatelabs/ThreadWeaver/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a>
+      <a href="mailto:info@agentstatelabs.com">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    ThreadWeaver v0.3.5-beta.2 &middot; <a href="https://github.com/agentstatelabs/ThreadWeaver/blob/main/LICENSE" target="_blank">BSL 1.1</a> &middot; Built by the <a href="https://agentstategraph.dev" target="_blank">AgentStateGraph</a> team
+  </div>
+</footer>
+
+<script defer src="main.js"></script>
+</body>
+</html>
