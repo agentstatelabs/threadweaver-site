@@ -39,8 +39,7 @@
   if (termBody) {
     let hasPlayed = false;
     const commands = [
-      { prompt: '$ ', text: 'git clone https://github.com/agentstatelabs/ThreadWeaver', delay: 25 },
-      { prompt: '$ ', text: 'cd ThreadWeaver', delay: 30 },
+      { prompt: '$ ', text: 'cd threadweaver', delay: 30 },
       { prompt: '$ ', text: 'docker compose up -d', delay: 30 },
       { output: 'Creating backend  ... done\nCreating frontend ... done', pause: 400 },
       { prompt: '$ ', text: '# Open http://localhost:3000', delay: 40 },
