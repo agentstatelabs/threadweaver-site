@@ -60,6 +60,13 @@ a:hover { filter: brightness(1.2); }
 .nav-links { display: flex; gap: 24px; }
 .nav-links a { color: var(--text-secondary); font-size: 13px; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--accent); filter: none; }
+/* Parent-brand — see agentstatelabs-site/BRANDING.md. */
+.nav-asl { opacity: 0.75; }
+.nav-asl:hover { opacity: 1; }
+.parent-brand { display: flex; align-items: center; justify-content: center; gap: 8px; border-top: none !important; padding-top: 0 !important; }
+.parent-brand a { color: var(--text-primary); font-weight: 600; }
+/* ASL's neutral gradient, not ThreadWeaver's tan, so it reads as parent brand. */
+.asl-glyph { width: 15px; height: 15px; border-radius: 4px; flex-shrink: 0; background: linear-gradient(135deg, #64748b, #e2e8f0); }
 
 /* ─── Hero ──────────────────────────────────────────────── */
 .hero {
